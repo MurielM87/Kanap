@@ -24,7 +24,7 @@ articleImg.setAttribute("src", "${productList.imageUrl}");
 articleImg.setAttribute("alt", "Photographie d'un canapé");
 
 const articleContent = document.createElement("div");
-articleItem.appendChild(articleContent);
+articleID.appendChild(articleContent);
 articleContent.setAttribute("class", "cart__item__content");
 
 const articleDescription = document.createElement("div");
