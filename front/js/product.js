@@ -1,11 +1,12 @@
-const produit = document.getElementsByClassName('item__img');
+const productCart = document.getElementsByClassName('item__img');
 
 const productImg = document.createElement('img');
-document.getElementsByClassName('item__img').appendChild(productImg);
-productImg.setAttribute('src', '${productList.img}');
-productImg.setAttribute('alt', '${productList.altText}');
+productCart.appendChild(productImg);
+//productImg.setAttribute('src', '${productList.img}');
+//productImg.setAttribute('alt', '${productList.altText}');
 
-const productName = document.getElementById(title).appendChild(productName);
+//const productName = document.getElementById('title').textContent('coucou');
+
 
 const productPrice = document.getElementById('price');
 

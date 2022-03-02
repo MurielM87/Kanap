@@ -1,56 +1,63 @@
-const cardArticle = document.getElementById("cart__items");
+//variables
+let productID = document.getElementById("product-ID");
+let productColor = document.getElementsByClassName("product-color"); //à revoir pour data-color
+let productQuantity = document.getElementById("totalQuantity");
+console.log(productID);
+console.log(productColor);
+console.log(productQuantity);
+
 
 //intégration dynamique du HTML
 const articleID = document.createElement("article");
-document.getElementById("items").appendChild(articleID);
+document.getElementById("cart__items").appendChild(articleID);
 articleID.setAttribute("class", "cart__item"); 
-articleID.setAttribute("date-id", "{product-ID}"); //à verifier
+articleID.setAttribute("data-id", "{product-ID}"); //à verifier
 articleID.setAttribute("data-color", "{product-color}")
 
 const articleItem = document.createElement('div');
-articleItem.appendChild(articleID);
-articleItem.setAttribute("cart__item__img");
+articleID.appendChild(articleItem);
+articleItem.setAttribute("class", "cart__item__img");
 
 const articleImg = document.createElement('img');
-articleImg.appendChild(articleItem);
-articleImg.setAttribute("src", "../images/product01.jpg");
+articleItem.appendChild(articleImg);
+articleImg.setAttribute("src", "${productList.imageUrl}");
 articleImg.setAttribute("alt", "Photographie d'un canapé");
 
 const articleContent = document.createElement("div");
-articleContent.appendChild(articleID);
+articleItem.appendChild(articleContent);
 articleContent.setAttribute("class", "cart__item__content");
 
 const articleDescription = document.createElement("div");
-articleDescription.appendChild(articleContent);
+articleContent.appendChild(articleDescription);
 articleDescription.setAttribute("class", "cart__item__content__description");
 
 const articleName = document.createElement("h2")
-articleName.appendChild(articleDescription);
-articleName.textContent("Nom du produit"); //à compléter
+articleDescription.appendChild(articleName);
+//articleName.textContent("Nom du produit"); //à compléter
 const articleColor = document.createElement("p");
-articleColor.appendChild(articleDescription);
-articleColor.textContent("Vert"); //à compléter
+articleDescription.appendChild(articleColor);
+//articleColor.textContent("Vert"); //à compléter
 const articlePrice = document.createElement("p");
-articlePrice.appendChild(articleDescription);
-articlePrice.textContent("42,00 €") //à compléter
+articleDescription.appendChild(articlePrice);
+//articlePrice.textContent("42,00 €") //à compléter
 
 const articleSettings = document.createElement("div");
-articleSettings.appendChild(articleContent);
+articleContent.appendChild(articleSettings);
 articleSettings.setAttribute("class", "cart__item__content__settings");
 
 const articleQuantity = document.createElement("div");
-articleQuantity.appendChild(articleSettings);
+articleSettings.appendChild(articleQuantity);
 articleQuantity.setAttribute("class", "cart__item__content__settings__quantity");
 
 const articleNumber = document.createElement("p");
-articleNumber.textContent("Qté : ") //à compléter
+//articleNumber.textContent("Qté : ") //à compléter
 
 const articleDelete = document.createElement("div");
-articleDelete.appendChild(articleSettings);
+articleSettings.appendChild(articleDelete);
 articleDelete.setAttribute("class", "cart__item__content__settings__delete");
 
 const articleDeleteItems = document.createElement("p");
-articleDeleteItems.appendChild(articleDelete);
+articleDelete.appendChild(articleDeleteItems);
 articleDeleteItems.setAttribute("class", "deleteItem");
-articleDeleteItems.textContent("Supprimer")
+//articleDeleteItems.textContent("Supprimer")
 
