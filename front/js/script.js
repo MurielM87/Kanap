@@ -22,7 +22,7 @@ productList
       
       const productImg = document.createElement("img");
       productArticle.appendChild(productImg);
-      productImg.setAttribute("src", "${productList.imageUrl}"); //back vs front
+      productImg.setAttribute("src", "ProductList.${imageUrl}"); //back vs front
       productImg.setAttribute("alt", "${productList.altTxt}");
 
       const productName = document.createElement("h3");
