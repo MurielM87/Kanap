@@ -87,3 +87,4 @@ document.getElementById("cart__items").innerHTML += `<article class="cart__item"
   </div>
 </div>
 </article>`;
+

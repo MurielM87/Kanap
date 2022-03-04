@@ -1,9 +1,16 @@
-const productList = fetch("http://localhost:3000/api/products");
+//recuperation de l'id produit
+let urlProduct = new URL("http://localhost:3000/api/products/${productId}");
+let params = new URLSearchParams(window.location.search);
+let productId = params.get("id");
+console.log("id");
 
-const productCart = document.getElementsByClassName('item__img');
 
-const productImg = document.createElement('img');
-productCart.appendChild(productImg);
+
+//integration du HTML
+//const productCart = document.getElementsByClassName('item__img');
+
+const productImg = document.createElement("img");
+document.getElementsByClassName("item__img").appendChild(productImg);
 //productImg.setAttribute('src', '${productList.img}');
 //productImg.setAttribute('alt', '${productList.altText}');
 

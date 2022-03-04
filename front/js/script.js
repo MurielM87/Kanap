@@ -19,7 +19,7 @@ productList
       //console.log(productLien)
       const productArticle = document.createElement("article");
       productLien.appendChild(productArticle);
-      
+        
       const productImg = document.createElement("img");
       productArticle.appendChild(productImg);
       productImg.setAttribute("src", "ProductList.${imageUrl}"); //back vs front
