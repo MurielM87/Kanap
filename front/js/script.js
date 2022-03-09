@@ -7,39 +7,39 @@ productList
     return res.json();
   })
   .then(function (products) {
-    console.log(products); //verification des données
-    
-    for (const productList of products) { //let i = 0; i < products.length; i+=1
+    console.log(products);
+
+    for (const productList of products) {
       console.log(productList);
 
-      //1ere methode possible pour intégrer le HTML de manière dynamique
-      const productLien = document.createElement("a"); //creation element "a" lien
-      document.getElementById("items").appendChild(productLien); //relier element à son parent
-      productLien.href = "product.html"; //ajout href + lien
-      //productLien.querySelector("data-id", "${products._id}"); //rajouter ID du produit
-      
-      //console.log(productLien)
-      const productArticle = document.createElement("article");
-      productLien.appendChild(productArticle);
-           
-      
-      const productImg = document.createElement("img");
-      productArticle.appendChild(productImg);
-      productImg.src = "${productList.imageUrl}"; //back vs front
-      productImg.alt = "${products.altTxt}";
-      
-      const productName = document.createElement("h3");
-      productArticle.appendChild(productName);
-      productName.classList.add("productName");
-      productName.innerText = "titre";
+        //1ere methode possible pour intégrer le HTML de manière dynamique
+        const productLien = document.createElement("a"); //creation element "a" lien
+        document.getElementById("items").appendChild(productLien); //relier element à son parent
+        productLien.href = "product.html"; //ajout href + lien
+        //productLien.querySelector("data-id", "${products._id}"); //rajouter ID du produit
 
-      const productDescription = document.createElement("p");
-      productArticle.appendChild(productDescription);
-      productDescription.classList.add("productDescription");
-      productDescription.innerText = "description";
-      console.log(productList.altTxt)
+        //console.log(productLien)
+        const productArticle = document.createElement("article");
+        productLien.appendChild(productArticle);
+
+        const productImg = document.createElement("img");
+        productArticle.appendChild(productImg);
+        productImg.src = "http://localhost:3000/images/${product[0].imageUrl}";
+        //"${productList.imageUrl}"; //back vs front //
+        productImg.alt = "${productsList.altTxt}";
+
+        const productName = document.createElement("h3");
+        productArticle.appendChild(productName);
+        productName.classList.add("productName");
+        productName.innerText = "titre";
+
+        const productDescription = document.createElement("p");
+        productArticle.appendChild(productDescription);
+        productDescription.classList.add("productDescription");
+        productDescription.innerText = "description";
+        console.log(productList.altTxt);
     }
-    /*
+    
     //2eme methode possible pour intégrer le HTML de manière dynamique
       for (const productList of products) {
       //console.log (productList);   
@@ -51,9 +51,6 @@ productList
             </article>
           </a>`;
           //console.log(productList.imageUrl)
-      }*/
+      }
   })
   .catch((err) => console.log(`Erreur : ${err}`));
-
-
-

@@ -10,18 +10,18 @@ console.log("id");
 //const productCart = document.getElementsByClassName('item__img');
 
 const productImg = document.createElement("img");
-document.getElementsByClassName("item__img").appendChild(productImg);
-//productImg.setAttribute('src', '${productList.img}');
-//productImg.setAttribute('alt', '${productList.altText}');
+document.querySelector(".item__img").appendChild(productImg);
+productImg.src = '${productList.img}';
+productImg.alt = '${productList.altText}';
 
 //const productName = document.getElementById('title').textContent('coucou');
 
 
-const productPrice = document.getElementById('price');
+const productPrice = document.querySelector('#price');
 
-const productDescription = document.getElementById('description');
+const productDescription = document.querySelector('#description');
 
-const productColor = document.getElementById('colors'); //a verifier par rapport à option value
+const productColor = document.querySelector('#colors'); //a verifier par rapport à option value
 //const productColor = document.querySelector(input[value "${productList_colors}");
 
 //
