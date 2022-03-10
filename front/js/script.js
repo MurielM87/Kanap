@@ -1,56 +1,52 @@
 //appeler l'API par fetch pour créer des requêtes HTTP et des reponses
-const productList = fetch("http://localhost:3000/api/products");
-
-//creer la promise
-productList
+fetch("http://localhost:3000/api/products")
   .then(function (res) {
     return res.json();
   })
   .then(function (products) {
     console.log(products);
-
-    for (const productList of products) {
-      console.log(productList);
+    const items = document.getElementById("items");
+    
+    for (const product of products) {
+      console.log(product);
 
         //1ere methode possible pour intégrer le HTML de manière dynamique
         const productLien = document.createElement("a"); //creation element "a" lien
-        document.getElementById("items").appendChild(productLien); //relier element à son parent
-        productLien.href = "product.html"; //ajout href + lien
-        //productLien.querySelector("data-id", "${products._id}"); //rajouter ID du produit
+        productLien.href = `product.html?id=${product._id}`; //ajout href + lien
 
         //console.log(productLien)
-        const productArticle = document.createElement("article");
+        const productArticle = document.createElement("article"); //creation balise article
         productLien.appendChild(productArticle);
 
-        const productImg = document.createElement("img");
+        const productImg = document.createElement("img"); //creation balise image
         productArticle.appendChild(productImg);
-        productImg.src = "http://localhost:3000/images/${product[0].imageUrl}";
-        //"${productList.imageUrl}"; //back vs front //
-        productImg.alt = "${productsList.altTxt}";
+        productImg.src = product.imageUrl;
+        productImg.alt = product.altTxt;
 
-        const productName = document.createElement("h3");
+        const productName = document.createElement("h3"); //creation balise titre h3
         productArticle.appendChild(productName);
         productName.classList.add("productName");
-        productName.innerText = "titre";
+        productName.innerText = product.name;
 
-        const productDescription = document.createElement("p");
+        const productDescription = document.createElement("p"); //creation balise paragraphe
         productArticle.appendChild(productDescription);
         productDescription.classList.add("productDescription");
-        productDescription.innerText = "description";
-        console.log(productList.altTxt);
+        productDescription.innerText = product.description;
+        //console.log(product.altTxt);
+        
+        items.appendChild(productLien); //relier tous les elements à son parent
     }
     
-    //2eme methode possible pour intégrer le HTML de manière dynamique
-      for (const productList of products) {
-      //console.log (productList);   
-      document.getElementById("items").innerHTML += `<a href="./product.html?id=42"> 
+    /*2eme methode possible pour intégrer directement le HTML de manière dynamique
+      for (const product of products) {
+      //console.log (product);   
+      document.getElementById("items").innerHTML += `<a href="./product.html?id=${product._id}"> 
             <article>
-              <img src="${productList.imageUrl}", alt="${productList.altTxt}">
-              <h3 class="productName">${productList.name}</h3>
-              <p class="productDescription">${productList.description}</p>
+              <img src="${product.imageUrl}", alt="${product.altTxt}">
+              <h3 class="productName">${product.name}</h3>
+              <p class="productDescription">${product.description}</p>
             </article>
           </a>`;
-          //console.log(productList.imageUrl)
-      }
+      }*/
   })
   .catch((err) => console.log(`Erreur : ${err}`));

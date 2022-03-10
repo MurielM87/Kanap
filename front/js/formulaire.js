@@ -61,4 +61,4 @@ function check(input){
         input.setCustomValidity("obligatoire");
     }
     return = input.reportValidity(); //pour passer au champ suivant
-}
+};
