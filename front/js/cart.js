@@ -1,8 +1,8 @@
-let params = new URLSearchParams(window.location.search);
+/*let params = new URLSearchParams(window.location.search);
 let productId = params.get("id"); //recuperation de l'id du produit
-console.log(productId);
+console.log(productId);*/
 
-fetch(`http://localhost:3000/api/products/${productId}`)
+fetch(`http://localhost:3000/api/products/order`)
   .then(function (res) {
   return res.json();
   })
@@ -19,7 +19,6 @@ fetch(`http://localhost:3000/api/products/${productId}`)
 //console.log(productColor);
 //console.log(productQuantity);
 
-//1ere methode d'integration dynamique du HTML
 const articleID = document.createElement("article");
 document.getElementById("cart__items").appendChild(articleID);
 articleID.classList.add("cart__item");
@@ -32,8 +31,8 @@ articleItem.classList.add("cart__item__img");
 
 const articleImg = document.createElement("img");
 articleItem.appendChild(articleImg);
-//articleImg.src = "${productList.imageUrl}";
-articleImg.alt = "Photographie d'un canapé";
+articleImg.src = productList.imageUrl;
+articleImg.alt = productList.AltTxt;
 
 const articleContent = document.createElement("div");
 articleID.appendChild(articleContent);
@@ -72,3 +71,67 @@ const articleDeleteItems = document.createElement("p");
 articleDelete.appendChild(articleDeleteItems);
 articleDeleteItems.classList.add('deleteItem');
 articleDeleteItems.innerText = "Supprimer";
+
+
+//validation formulaire
+document.querySelector('form input[type="submit"]').addEventListener("click", (e) => {
+  e.preventDefault(); //annule envoi du formulaire
+    //customed message  -- setCustomValidity obligatoirement sur un champ
+    let input = document.querySelector('.cart__order');
+    let valid = input.checkValidity(); 
+    if(!valid){
+      document.getElementById("firstNameErrorMsg").innerText = "erreur dans la saisie";
+      document.getElementById("lastNameErrorMsg").innerText = "erreur dans la saisie";
+      document.getElementById("addressErrorMsg").innerText = "erreur dans la saisie de l'adresse";
+      document.getElementById("cityErrorMsg").innerText = "erreur dans la saisie de la ville";
+      document.getElementById("emailErrorMsg").innerText = "erreur dans la saisie de l'email":
+      //message(input);
+    }
+  });
+
+//pour verifier le formulaire en entier
+document.querySelector('form input[type="submit"]').addEventListener("click", (e) => {
+  e.preventDefault(); //annule envoi du formulaire
+  let fields = document.querySelectorAll('#formaulaire input, #formulaire select, #formulaire textarea'); //pour l'ensemble des champs
+  let valid = true ; 
+  for (let field of (fields)){ 
+      valid &= check(field); //valid = valid && check(field);
+      if(!valid){
+          break;
+      }
+  }
+  if (valid) {
+
+  }
+});
+
+
+/*
+<div class="cart__order">
+              <form method="get" class="cart__order__form">
+                <div class="cart__order__form__question">
+                  <label for="firstName">Prénom: </label>
+                  <input type="text" name="firstName" id="firstName" required>
+                  <p id="firstNameErrorMsg"><!-- ci est un message d'erreur --></p>
+                </div>
+                <div class="cart__order__form__question">
+                  <label for="lastName">Nom: </label>
+                  <input type="text" name="lastName" id="lastName" required>
+                  <p id="lastNameErrorMsg"></p>
+                </div>
+                <div class="cart__order__form__question">
+                  <label for="address">Adresse: </label>
+                  <input type="text" name="address" id="address" required>
+                  <p id="addressErrorMsg"></p>
+                </div>
+                <div class="cart__order__form__question">
+                  <label for="city">Ville: </label>
+                  <input type="text" name="city" id="city" required>
+                  <p id="cityErrorMsg"></p>
+                </div>
+                <div class="cart__order__form__question">
+                  <label for="email">Email: </label>
+                  <input type="email" name="email" id="email" required>
+                  <p id="emailErrorMsg"></p>
+                </div>
+*/

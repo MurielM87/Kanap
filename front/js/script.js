@@ -16,23 +16,22 @@ fetch("http://localhost:3000/api/products")
 
         //console.log(productLien)
         const productArticle = document.createElement("article"); //creation balise article
-        productLien.appendChild(productArticle);
+        productLien.appendChild(productArticle); //relier l'element article a son parent
 
         const productImg = document.createElement("img"); //creation balise image
-        productArticle.appendChild(productImg);
-        productImg.src = product.imageUrl;
+        productArticle.appendChild(productImg); //relier l'element img a son parent
+        productImg.src = product.imageUrl; //ajout lien image
         productImg.alt = product.altTxt;
 
         const productName = document.createElement("h3"); //creation balise titre h3
-        productArticle.appendChild(productName);
-        productName.classList.add("productName");
-        productName.innerText = product.name;
+        productArticle.appendChild(productName); //relier l'element h3 a son parent
+        productName.classList.add("productName"); //ajout class à h3
+        productName.innerText = product.name; //ajout texte titre
 
         const productDescription = document.createElement("p"); //creation balise paragraphe
-        productArticle.appendChild(productDescription);
-        productDescription.classList.add("productDescription");
-        productDescription.innerText = product.description;
-        //console.log(product.altTxt);
+        productArticle.appendChild(productDescription); //relier l'element p a son parent
+        productDescription.classList.add("productDescription"); //ajout class à p
+        productDescription.innerText = product.description; //ajout texte description
         
         items.appendChild(productLien); //relier tous les elements à son parent
     }
@@ -49,4 +48,4 @@ fetch("http://localhost:3000/api/products")
           </a>`;
       }*/
   })
-  .catch((err) => console.log(`Erreur : ${err}`));
+  .catch((err) => console.log(`Erreur : ${err}`)); 
