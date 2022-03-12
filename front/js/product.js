@@ -10,26 +10,43 @@ fetch(`http://localhost:3000/api/products/${productId}`)
   })
   .then(function (kanap) {
     console.log(kanap);
-    const itemCart = document.getElementsByClassName("item__img");
-    
+
+    const itemCart = document.querySelector(".item__img");
+
     const itemImg = document.createElement("img");
     itemCart.appendChild(itemImg);
     itemImg.src = kanap.imageUrl;
     itemImg.alt = kanap.altTxt;
+   
+    //ajout titre h1
+    document.querySelector("h1").innerText = kanap.name;
 
-    const itemName = document.getElementById("title");
-    itemName.textInner = kanap.name;
-
-    const itemPrice = document.getElementById("price");
-    itemPrice.textInner = kanap.price;
-
-    const itemDescription = document.getElementById("description");
-    itemDescription.textInner = kanap.description;
+    //ajout prix
+    document.querySelector("#price").innerText = kanap.price;
     
-    const itemColor = document.querySelector("option value");
-    itemColor.value = kanap.colors;
+    //ajout description
+    document.querySelector("#description").innerText = kanap.description;
 
+    //ajout du chox de couleurs
+    let kanapColors = kanap.colors;
+    console.log(kanapColors)
+
+    const colors = document.querySelector("#colors");
+
+    for (i = 0; i < kanapColors.length; i++){
+      let itemColor = document.createElement("option");
+      colors.appendChild(itemColor);
+      itemColor.value = kanap.colors[i];
+      itemColor.innerText = kanap.colors[i];
+    }    
   });
-//.catch((err) => console.log(`Erreur : ${err}`));
+  //.catch((err) => console.log(`Erreur : ${err}`)); 
 
-//envoyer au panier
+//envoyer le produit choisi dans le panier
+
+
+const addToCartBtn = document.querySelector("#addToCart");
+addToCartBtn.addEventListener('click', () => {
+  console.log('test')
+  
+});
