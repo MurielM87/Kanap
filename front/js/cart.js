@@ -2,6 +2,8 @@
 let productId = params.get("id"); //recuperation de l'id du produit
 console.log(productId);*/
 
+//cart = JSON.parse(localStorage...)
+
 fetch(`http://localhost:3000/api/products/order`)
   .then(function (res) {
   return res.json();
