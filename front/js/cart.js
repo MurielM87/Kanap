@@ -1,8 +1,9 @@
-/*let params = new URLSearchParams(window.location.search);
+let params = new URLSearchParams(window.location.search);
 let productId = params.get("id"); //recuperation de l'id du produit
-console.log(productId);*/
+console.log(productId);
 
-//cart = JSON.parse(localStorage...)
+/*
+cart = JSON.parse(localStorage)
 
 fetch(`http://localhost:3000/api/products/order`)
   .then(function (res) {
@@ -24,7 +25,7 @@ fetch(`http://localhost:3000/api/products/order`)
 const articleID = document.createElement("article");
 document.getElementById("cart__items").appendChild(articleID);
 articleID.classList.add("cart__item");
-articleID.setAttribute("data-id", "{product-ID}"); //à verifier
+articleID.data-id = product_Id; //à verifier
 articleID.setAttribute("data-color", "{product-color}");
 
 const articleItem = document.createElement("div");
@@ -106,34 +107,4 @@ document.querySelector('form input[type="submit"]').addEventListener("click", (e
 
   }
 });
-
-
-/*
-<div class="cart__order">
-              <form method="get" class="cart__order__form">
-                <div class="cart__order__form__question">
-                  <label for="firstName">Prénom: </label>
-                  <input type="text" name="firstName" id="firstName" required>
-                  <p id="firstNameErrorMsg"><!-- ci est un message d'erreur --></p>
-                </div>
-                <div class="cart__order__form__question">
-                  <label for="lastName">Nom: </label>
-                  <input type="text" name="lastName" id="lastName" required>
-                  <p id="lastNameErrorMsg"></p>
-                </div>
-                <div class="cart__order__form__question">
-                  <label for="address">Adresse: </label>
-                  <input type="text" name="address" id="address" required>
-                  <p id="addressErrorMsg"></p>
-                </div>
-                <div class="cart__order__form__question">
-                  <label for="city">Ville: </label>
-                  <input type="text" name="city" id="city" required>
-                  <p id="cityErrorMsg"></p>
-                </div>
-                <div class="cart__order__form__question">
-                  <label for="email">Email: </label>
-                  <input type="email" name="email" id="email" required>
-                  <p id="emailErrorMsg"></p>
-                </div>
 */

@@ -40,53 +40,57 @@ fetch(`http://localhost:3000/api/products/${productId}`)
   .catch((err) => console.log(`Erreur : ${err}`));
 
 //////envoyer le produit choisi dans le panier//////
+fetch(`http://localhost:3000/api/products/${productId}`)
+  .then(function (res) {
+    return res.json();
+  })
+  .then(function (kanap) {
+    const itemColors = kanap.colors;
+    const itemQuantity = document.querySelector("#quantity");
+    console.log(itemQuantity);
+
+    //selectionner le bouton envoyer au panier
+    const addToCartBtn = document.querySelector("#addToCart");
+    console.log("ok");
+    addToCartBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      //choix couleur de l'utilisateur dans une variable
+      for (j = 0; j < itemColors.length; j++) {
+        console.log(itemColors);
+
+        if (productId) {
+          //s'il y a deja des produits enregistres dans le local storage
+          console.log("ok");
+          productId.push(itemOptions);
+          localStorage.setItems("productKanap", JSON.stringify(productId)); //pour conserver les produits dans le panier //du json au javascript
+          //popupConfirmation();
+        } else {
+          productId = [];
+          productId.push(itemOptions); //ajouter dans le addEventListener
+          localStorage.setItems("productKanap", JSON.stringify(productId)); //pour conserver les produits dans le panier //du json au javascript
+        } //s'il n'y a pas de produit enregistre dans le local storage
+      }
+    });
+  });
 
 //selection de l'id du choix couleur et de la quantite
-const itemColors = document.querySelector("#colors");
-console.log(itemColors);
-const itemQuantity = document.querySelector("#quantity");
-console.log(itemQuantity);
-
-//selectionner le bouton envoyer au panier
-const addToCartBtn = document.querySelector("#addToCart");
-console.log(addToCartBtn);
-
-addToCartBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-
-  //choix couleur de l'utilisateur dans une variable
-  for (j = 0; j < itemColors.length; j++) {
-    console.log(itemColors);
-  }
-});
+//const itemColors = document.querySelector("#colors");
+//console.log(itemColors);
 
 //recuperation des informations du produit selectionne
-let itemOptions = {
-  name: "${kanap.name}",
-  idproduit: "${kanap._id}",
-  option: itemColors,
-  quantite: itemQuantity,
+/*let itemOptions = {
+  name: "${kanap.name}.${kanap._id}",
+  option: "${kanap.colors}",
+  //quantite: itemQuantity,
   price: "${kanap.price}",
 };
-console.log(itemOptions);
+console.log(itemOptions);*/
 
 /////////////////////envoyer dans le localStorage
 
 //recuperer les valeurs du formulaire dans le local storage
 //voir storage.setItems (mdn docs)
-
-//s'il y a deja des produits enregistres dans le local storage
-/*if(productItems) {
-  console.log("ok");
-  productItems.push(itemOptions);
-  localStorage.setItems("productKanap", JSON.stringify(productItems)); //pour conserver les produits dans le panier //du json au javascript
-  popupConfirmation();
-}else{
-  productItems = [];
-  productItems.push(itemOptions) //ajouter dans le addEventListener
-  localStorage.setItems("productKanap", JSON.stringify(productItems)); //pour conserver les produits dans le panier //du json au javascript
-
-} */ //s'il n'y a pas de produit enregistre dans le local storage
 
 //fonction fenetre popup - optionnel
 /*const popupConfirmation = () => {
