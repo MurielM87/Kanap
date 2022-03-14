@@ -2,6 +2,70 @@ let params = new URLSearchParams(window.location.search);
 let productId = params.get("id"); //recuperation de l'id du produit
 console.log(productId);
 
+//gestion du panier
+class Basket{
+  constructor() {
+      let basket = localStorage.getItem("basket");
+      if (basket == null) {
+          this.basket = [];
+      }else{
+          this.basket = JSON.parse(basket); //transformer chaine de caracteres en objet
+      }
+  }
+
+  save() {
+      localStorage.setItem("basket", JSON.stringify(this.basket)); //transformer objet en chaine de caracteres
+  }
+
+  //fonction ajout au panier
+  add(product){
+      let foundProduct = this.basket.find(p => p.id == product.id); //find pour chercher un element dans un tableau par rapport à une condition
+      if (foundProduct != undefined){
+          foundProduct.quantity++;
+      }else{
+          product.quantity = 1;
+          this.basket.push(product);
+      }
+      this.basket.push(product);
+      this.save(); //pour enregistrer
+  }
+  //retirer un produit du panier
+  remove(product){
+      basket = this.basket.filter(p => p.id != p.quantity);
+      this.save();
+  }
+  //pour changer la quantité
+  changeQuantity (product, quantity){
+      let foundProduct = this.basket.find(p => p.id == product.id); 
+      if (foundProduct != undefined) {
+          foundProduct.quantity += quantity;
+          if(foundProduct.quantity <= 0){ //pour supprimer quand quantité à 0
+              this.remmove(foundProduct); 
+          }else{
+              this.save();
+          }
+      }
+      this.save();
+  }
+  //pour calculer la quantite totale
+  getNumberProduct(){
+      let number = 0 ; 
+      for (let product of this.basket){
+          number += product.quantity;
+      }
+      return number;
+  }
+  //pour calculer le prix total
+  getTotalPrice(){
+      let total = 0;
+      for (let product of this.basket){
+          total += product.quantity * product.price;
+      }
+      return total;
+  }
+}
+
+
 /*
 cart = JSON.parse(localStorage)
 
@@ -12,7 +76,7 @@ fetch(`http://localhost:3000/api/products/order`)
   .then (function(basket){
   console.log(basket)
   })
-  .catch((err) => console.log(`Erreur : ${err}`));
+  //.catch((err) => console.log(`Erreur : ${err}`));
 
 
 
@@ -74,7 +138,7 @@ const articleDeleteItems = document.createElement("p");
 articleDelete.appendChild(articleDeleteItems);
 articleDeleteItems.classList.add('deleteItem');
 articleDeleteItems.innerText = "Supprimer";
-
+*/
 
 //validation formulaire
 document.querySelector('form input[type="submit"]').addEventListener("click", (e) => {
@@ -107,4 +171,3 @@ document.querySelector('form input[type="submit"]').addEventListener("click", (e
 
   }
 });
-*/
