@@ -151,7 +151,7 @@ function popupConfirmation() {
   couleur: ${document.getElementById("colors").value}, 
   quantité: ${document.getElementById("quantity").value}, 
   a bien été ajouté au panier. 
-  Appuyez "OK" pour consulter le panier ou "annuler" pour modifier.`)
+  Appuyez sur "OK" pour consulter le panier ou sur "annuler" pour continuer vos achats.`)
   ) {
     window.location.href = "cart.html";
   } else {
