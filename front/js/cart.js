@@ -38,7 +38,7 @@ function displayCart(basket) {
         const cartProduct = document.createElement("article");
         cartProduct.classList.add("cart__item");
         cartProduct.setAttribute("data-id", p.id);
-        cartProduct.setAttribute("data-color", p.color);
+        cartProduct.setAttribute("data-color", color);
         
         const cartItemImg = document.createElement("div");
         cartItemImg.classList.add("cart__item__img");
@@ -90,7 +90,19 @@ function displayCart(basket) {
         cartQuantityProduct.setAttribute("max", 100);
         cartQuantityProduct.setAttribute("value", p.quantity);
         cartQuantityProduct.addEventListener("click", ()=> {
-          console.log(`add ${p.quantity}`);
+
+          //const updatedQuantity = cartQuantityProduct.value;
+          //augmenter la quantite
+         
+          /*for (quantity of cartQuantityProduct.value) {
+            if (cartData.id == p.id && cartData.color == p.color) {
+              cartQuantityProduct = updatedQuantity++;
+            }*/
+        
+          //enregistrer dans le localStorage
+          //localStorage.setItem("myCart", JSON.stringify(updatedQuantity));
+          //regenerer le panier
+          location.reload();
         });
 
         const cartItemContentDelete = document.createElement("div");
@@ -103,11 +115,14 @@ function displayCart(basket) {
         cartItemDelete.innerText = "Supprimer";
         cartItemDelete.addEventListener("click", ()=> {
 
-          console.log(`delete ${product._id}`);
-
-          //supprimer le produit du panier - utiliser filter
-          const deleteProduct = p.id.filter(p.quantity >= 1);
+          //supprimer le produit du panier 
+          const deleteCartData = cartData.filter(
+            (element) => element.id !== p.id || element.color !== p.color
+          );
+          //enregistrer dans le localStorage
+          localStorage.setItem("myCart", JSON.stringify(deleteCartData));
           //regenerer l'affichage du panier
+          location.reload();
         })
 
         const cartTotalQuantity = document.getElementById("totalQuantity");
