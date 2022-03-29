@@ -1,11 +1,12 @@
-
 const cartItems = document.getElementById("cart__items");
+const mytotalQuantity = document.getElementById("totalQuantity");
+  const mytotalPrice = document.getElementById("totalPrice");
 
 //récupérer les données enregistrées des produits dans le localStorage
 let cartData = getLocalStorage();
 console.log(cartData);
 
-displayCart(cartData)
+displayCart(cartData);
 //si le localStorage est vide
 function getLocalStorage() {
   let productCart = localStorage.getItem("myCart");
@@ -19,27 +20,25 @@ function getLocalStorage() {
 }
 
 function displayCart(basket) {
-  console.log("displayCart");
+  cartItems.innerHTML = "";
+  let totalQuantity = 0;
+  let totalPrice = 0;
   for (let p of basket) {
-
-
     //appel API selon ID produit
     fetch(`http://localhost:3000/api/products/${p.id}`)
       .then(function (res) {
         return res.json();
       })
       .then(function (product) {
-          let color = p.color;
-          let quantity = p.quantity;
-
-        console.log(product);
+        let color = p.color;
+        let quantity = p.quantity;
 
         //integrer le HTML de manière dynamique
         const cartProduct = document.createElement("article");
         cartProduct.classList.add("cart__item");
         cartProduct.setAttribute("data-id", p.id);
         cartProduct.setAttribute("data-color", color);
-        
+
         const cartItemImg = document.createElement("div");
         cartItemImg.classList.add("cart__item__img");
         cartProduct.appendChild(cartItemImg);
@@ -61,20 +60,24 @@ function displayCart(basket) {
         cartTitle.innerText = product.name;
         cartItemDescription.appendChild(cartTitle);
 
+        //creation de la balise color
         const cartColor = document.createElement("p");
         cartColor.innerText = p.color;
         cartItemDescription.appendChild(cartColor);
 
+        //creation de la balise prix
         const cartPrice = document.createElement("p");
         cartPrice.innerText = `prix : ${product.price}€`;
         cartItemDescription.appendChild(cartPrice);
 
         const cartItemSettings = document.createElement("div");
-        cartItemSettings.classList.add("cart__item__content__settings")
+        cartItemSettings.classList.add("cart__item__content__settings");
         cartItemContent.appendChild(cartItemSettings);
 
         const cartItemContentQuantity = document.createElement("div");
-        cartItemContentQuantity.classList.add("cart_item__content__settings__quantity");
+        cartItemContentQuantity.classList.add(
+          "cart_item__content__settings__quantity"
+        );
         cartItemSettings.appendChild(cartItemContentQuantity);
 
         const cartItemQuantity = document.createElement("p");
@@ -88,34 +91,36 @@ function displayCart(basket) {
         cartQuantityProduct.setAttribute("name", "itemQuantity");
         cartQuantityProduct.setAttribute("min", 1);
         cartQuantityProduct.setAttribute("max", 100);
-        cartQuantityProduct.setAttribute("value", p.quantity);
-        cartQuantityProduct.addEventListener("click", ()=> {
-
-          //const updatedQuantity = cartQuantityProduct.value;
-          //augmenter la quantite
-         
-          /*for (quantity of cartQuantityProduct.value) {
-            if (cartData.id == p.id && cartData.color == p.color) {
-              cartQuantityProduct = updatedQuantity++;
-            }*/
-        
+        cartQuantityProduct.setAttribute("value", quantity);
+        cartQuantityProduct.addEventListener("change", (e) => {
+          let id = p.id;
+          let color = p.color;
+          //utilisation de l'objet event pour recuperer la quantite
+          let newQuantity = Number(e.target.value);
+          let cartData = getLocalStorage();
+          for (let kanap of cartData) {
+            if (kanap.id == id && kanap.color == color) {
+              kanap.quantity = newQuantity;
+              break
+            }
+          }
           //enregistrer dans le localStorage
-          //localStorage.setItem("myCart", JSON.stringify(updatedQuantity));
-          //regenerer le panier
-          location.reload();
+          localStorage.setItem("myCart", JSON.stringify(cartData));
+          displayCart(cartData);
         });
 
         const cartItemContentDelete = document.createElement("div");
-        cartItemContentDelete.classList.add("cart__item__content__settings__delete");
+        cartItemContentDelete.classList.add(
+          "cart__item__content__settings__delete"
+        );
         cartItemContent.appendChild(cartItemContentDelete);
 
         const cartItemDelete = document.createElement("p");
         cartItemContentDelete.appendChild(cartItemDelete);
         cartItemDelete.classList.add("deleteItem");
         cartItemDelete.innerText = "Supprimer";
-        cartItemDelete.addEventListener("click", ()=> {
-
-          //supprimer le produit du panier 
+        cartItemDelete.addEventListener("click", () => {
+          //supprimer le produit du panier
           const deleteCartData = cartData.filter(
             (element) => element.id !== p.id || element.color !== p.color
           );
@@ -123,52 +128,46 @@ function displayCart(basket) {
           localStorage.setItem("myCart", JSON.stringify(deleteCartData));
           //regenerer l'affichage du panier
           location.reload();
-        })
-
-        const cartTotalQuantity = document.getElementById("totalQuantity");
-        cartTotalQuantity.innerText = ``;
-        const cartTotalPrice = document.getElementById("totalPrice");
-        cartTotalPrice.innertext = `(total += totalQuantity * product.price)`;
-
+        });
+        //quantite totale
+        totalQuantity += p.quantity
+        mytotalQuantity.innerText = totalQuantity;
+        //prix total
+        totalPrice += p.quantity * product.price;
+        mytotalPrice.innerText = totalPrice;
 
         cartItems.appendChild(cartProduct);
-
       });
-
-    
+    // .catch((err) => console.log(`Erreur : ${err}`));
   }
-
-
 }
-
-
 
 //verifier formulaire
 let form = document.querySelector(".cart__order__form");
 
 //ecouter la modification du prenom
-form.firstName.addEventListener('change', function () {
-  validFirstName(this)
-})
+form.firstName.addEventListener("change", () => {
+  validFirstName(this);
+});
 
 //ecouter la modification du nom
-form.lastName.addEventListener('change', function () {
-  validLastName(this)
-})
+form.lastName.addEventListener("change", () => {
+  validLastName(this);
+});
 
 //ecouter la modification de l'adresse
-form.address.addEventListener('change', function () {
-  validAddress(this)
-})
+form.address.addEventListener("change", () => {
+  validAddress(this);
+});
 
 //ecouter la modification de la ville
-form.city.addEventListener('change', function () {
-  validCity(this)
-})
+form.city.addEventListener("change", () => {
+  validCity(this);
+});
 
 //ecouter la modification de l'email
-form.email.addEventListener('change', function () {
-  validEmail(this)
+form.email.addEventListener("change", () => {
+  validEmail(this);
 });
 
 //validation du prénom
@@ -274,8 +273,8 @@ function prepareOrderData() {
   //préparer le tableau de string product ID
   const idProducts = [];
 
-  for (let i = 0; i < getCartData.length; i++) {
-    idProducts.push(getCartData[i].id);
+  for (let i = 0; i < cartData.length; i++) {
+    idProducts.push(cartData[i].id);
   }
 
   const orderData = {
@@ -299,7 +298,7 @@ function sendOrderData() {
     body: jsonOrderData,
   };
 
-  //envoyer toutes les données concernées (prorduct-ID + données contacts) au back-end
+  //envoyer toutes les données concernées (product-ID + donnees contacts) au back-end
   fetch("http://localhost:3000/api/products/order", options)
     .then(function (response) {
       return response.json();
@@ -311,8 +310,6 @@ function sendOrderData() {
       window.location.replace(`confirmation.html?order=${data.orderId}`);
     })
     .catch(function (error) {
-      alert(
-        "Le serveur ne répond pas. Réessayer une autre fois."
-      );
+      alert("Le serveur ne répond pas. Réessayer une autre fois.");
     });
 }

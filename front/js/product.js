@@ -47,9 +47,6 @@ fetch(`http://localhost:3000/api/products/${productId}`)
 //selectionner le bouton envoyer vers le panier
 addToCartBtn.addEventListener("click", () => {
   
-  //let basket = getBasket();
-
-  
   //variable pour nom quantite et couleur
   let product = {
     id : productId,
