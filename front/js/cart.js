@@ -319,7 +319,7 @@ console.log(idProducts);
   return orderData;
 }
 
-//envoyer les données du formulaire et les traiter
+//envoyer les donnees du formulaire et les traiter
 function sendOrderData() {
   const orderData = prepareOrderData();
   const jsonOrderData = JSON.stringify(orderData);
@@ -333,7 +333,7 @@ function sendOrderData() {
     body: jsonOrderData,
   };
 
-  //envoyer toutes les données concernées (prorduct-ID + données contacts) au back-end
+  //envoyer toutes les donnees (prorduct-ID + données contacts) dans le back-end
   fetch("http://localhost:3000/api/products/order", options)
     .then(function (response) {
       return response.json();
@@ -346,7 +346,7 @@ function sendOrderData() {
     })
     .catch(function (error) {
       alert(
-        "Le serveur ne répond pas. Si le problème persiste, contactez-nous par email : support@name.com."
+        "Le serveur ne répond pas. Merci de revenir ultérieurement."
       );
     });
 }
