@@ -1,6 +1,6 @@
 const cartItems = document.getElementById("cart__items");
 const mytotalQuantity = document.getElementById("totalQuantity");
-  const mytotalPrice = document.getElementById("totalPrice");
+const mytotalPrice = document.getElementById("totalPrice");
 
 //récupérer les données enregistrées des produits dans le localStorage
 let cartData = getLocalStorage();
@@ -101,7 +101,7 @@ function displayCart(basket) {
           for (let kanap of cartData) {
             if (kanap.id == id && kanap.color == color) {
               kanap.quantity = newQuantity;
-              break
+              break;
             }
           }
           //enregistrer dans le localStorage
@@ -130,56 +130,65 @@ function displayCart(basket) {
           location.reload();
         });
         //quantite totale
-        totalQuantity += p.quantity
+        totalQuantity += p.quantity;
         mytotalQuantity.innerText = totalQuantity;
         //prix total
         totalPrice += p.quantity * product.price;
         mytotalPrice.innerText = totalPrice;
 
         cartItems.appendChild(cartProduct);
-      });
-    // .catch((err) => console.log(`Erreur : ${err}`));
+      })
+      .catch((err) => console.log(`Erreur : ${err}`));
   }
 }
 
-//verifier formulaire
+
+
+//validation du formulaire
+
+//recuperation du formulaire et du bouton commander
 let form = document.querySelector(".cart__order__form");
+let submitButton = document.querySelector("#order");
+console.log(form);
+console.log(submitButton);
 
 //ecouter la modification du prenom
-form.firstName.addEventListener("change", () => {
+form.firstName.addEventListener('change', () => {
   validFirstName(this);
 });
 
 //ecouter la modification du nom
-form.lastName.addEventListener("change", () => {
+form.lastName.addEventListener('change', () => {
   validLastName(this);
 });
 
 //ecouter la modification de l'adresse
-form.address.addEventListener("change", () => {
+form.address.addEventListener('change', () => {
   validAddress(this);
 });
 
 //ecouter la modification de la ville
-form.city.addEventListener("change", () => {
+form.city.addEventListener('change', () => {
   validCity(this);
 });
 
 //ecouter la modification de l'email
-form.email.addEventListener("change", () => {
+form.email.addEventListener('change', () => {
   validEmail(this);
 });
 
+
 //validation du prénom
-function validFirstName(inputFirstName) {
+const validFirstName = function(inputFirstName) {
   //création de la reg exp pour valider prénom
-  const firstNameRegExp = new RegExp("^[a-zA-ZÀ-ÿ ,.'-]{2,}$", "g");
+  let firstNameRegExp = new RegExp("^[a-zA-ZÀ-ÿ ,.'-]{2,}$", "g");
 
-  const testFirstName = firstNameRegExp.test(inputFirstName.value);
-  const firstNameErrorMsg = inputFirstName.nextElementSibling;
+  //recuperation du message d'erreur
+  let firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
 
-  if (testFirstName) {
-    firstNameErrorMsg.textContent = " ";
+  //validation du prenom
+  if (firstNameRegExp.test(inputFirstName.value)) {
+    firstNameErrorMsg.textContent = "valide";
     return true;
   } else {
     firstNameErrorMsg.textContent = "Minimum 2 caractères, lettres uniquement.";
@@ -188,15 +197,16 @@ function validFirstName(inputFirstName) {
 }
 
 //validation du nom
-function validLastName(inputLastName) {
+const validLastName = function (inputLastName) {
   //création de la reg exp pour valider nom
-  const lastNameRegExp = new RegExp("^[a-zA-ZÀ-ÿ ,.'-]{2,}$", "g");
+  let lastNameRegExp = new RegExp("^[a-zA-ZÀ-ÿ ,.'-]{2,}$", "g");
 
-  const testLastName = lastNameRegExp.test(inputLastName.value);
-  const lastNameErrorMsg = inputLastName.nextElementSibling;
+  //recuperation du message d'erreur
+  let lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
 
-  if (testLastName) {
-    lastNameErrorMsg.textContent = " ";
+  //validation du nom
+  if (lastNameRegExp.test(inputLastName.value)) {
+    lastNameErrorMsg.textContent = "valide";
     return true;
   } else {
     lastNameErrorMsg.textContent = "Minimum 2 caractères, lettres uniquement.";
@@ -205,33 +215,35 @@ function validLastName(inputLastName) {
 }
 
 //validation de l'adresse postale
-function validAddress(inputAddress) {
+const validAddress = function (inputAddress) {
   //création de la reg exp pour valider l'adresse
-  const addressRegExp = new RegExp("^[a-zA-ZÀ-ÿ0-9 ,.'-]{2,}$", "g");
+  let addressRegExp = new RegExp("^[a-zA-ZÀ-ÿ0-9 ,.'-]{2,}$", "g");
 
-  const testAddress = addressRegExp.test(inputAddress.value);
-  const addressErrorMsg = inputAddress.nextElementSibling;
+  //recuperation du message d'erreur
+  let addressErrorMsg = document.getElementById("addressErrorMsg");
 
-  if (testAddress) {
-    addressErrorMsg.textContent = " ";
-    return true;
+  //validation de l'adresse
+  if (addressRegExp.test(inputAddress.value)) {
+    addressErrorMsg.textContent = "valide";
+    return true;    
   } else {
     addressErrorMsg.textContent =
       "Minimum 2 caractères, chiffres ou lettres uniquement.";
-    return false;
+      return false;
   }
 }
 
 //validation de la ville
-function validCity(inputCity) {
+const validCity = function (inputCity) {
   //création de la reg exp pour valider la ville
-  const cityRegExp = new RegExp("^[a-zA-ZÀ-ÿ ,.'-]{2,}$", "g");
+  let cityRegExp = new RegExp("^[a-zA-ZÀ-ÿ ,.'-]{2,}$", "g");
 
-  const testCity = cityRegExp.test(inputCity.value);
-  const cityErrorMsg = inputCity.nextElementSibling;
+  //recuperation du message d'erreur
+  let cityErrorMsg = document.getElementById("cityErrorMsg");
 
-  if (testCity) {
-    cityErrorMsg.textContent = " ";
+  //validation de la ville
+  if (cityRegExp.test(inputCity.value)) {
+    cityErrorMsg.textContent = "valide";
     return true;
   } else {
     cityErrorMsg.textContent = "Minimum 2 caractères, lettres uniquement.";
@@ -240,49 +252,35 @@ function validCity(inputCity) {
 }
 
 //validation de l'email
-function validEmail(inputEmail) {
+const validEmail = function (inputEmail) {
   //création de la reg exp pour valider email
-  const emailRegExp = new RegExp(
-    "^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$",
-    "g"
+  let emailRegExp = new RegExp(
+    '^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$', 'g'
   );
 
-  const testEmail = emailRegExp.test(inputEmail.value);
-  const emailErrorMsg = inputEmail.nextElementSibling;
+  //recuperation du message d'erreur
+  let emailErrorMsg = document.getElementById("emailErrorMsg");
 
-  if (testEmail) {
-    emailErrorMsg.textContent = " ";
+  //validation email
+  if (emailRegExp.test(inputEmail.value)) {
+    emailErrorMsg.textContent = "Email valide";
     return true;
   } else {
-    emailErrorMsg.textContent = "Merci de respecter le format email. ";
+    emailErrorMsg.textContent = "Merci de respecter le format email.";
     return false;
   }
 }
 
-//préparer les données validées du formulaires avant d'envoyer au back-end
-function prepareOrderData() {
-  //format demandé par le back-end
-  const contactData = {
-    firstName: document.getElementById("firstName").value,
-    lastName: document.getElementById("lastName").value,
-    address: document.getElementById("address").value,
-    email: document.getElementById("email").value,
-    city: document.getElementById("city").value,
-  };
 
-  //préparer le tableau de string product ID
-  const idProducts = [];
+//envoi du formulaire dans le back-end
 
-  for (let i = 0; i < cartData.length; i++) {
-    idProducts.push(cartData[i].id);
+//ecouter la soumission du formulaire
+form.addEventListener('submit', (e) => {
+  
+  if (validFirstName(form.firstName) && validLastName(form.lastName) && validAddress(form.adress) && validCity(form.city) && validEmail(form.email) && mytotalQuantity && mytotalPrice){
+    form.submit()
   }
-
-  const orderData = {
-    products: idProducts,
-    contact: contactData,
-  };
-  return orderData;
-}
+});
 
 //envoyer les données du formulaire et les traiter
 function sendOrderData() {
@@ -297,6 +295,21 @@ function sendOrderData() {
     },
     body: jsonOrderData,
   };
+
+  //Appel de l'API
+  fetch("http://localhost:3000/api/products")
+    .then((response) => response.json())
+    .then(function (data) {
+      //vider le localStorage
+      localStorage.clear();
+      //diriger sur la page confirmation en passant l'id dans l'URL
+      window.location.replace(`confirmation.html?order=${data.orderId}`);
+    })
+    .catch((error) => {
+      //message d'erreur si l'envoi a l'API n'est pas complete
+      alert("Le serveur ne répond pas. Rééssayez ultérieurement.");
+      console.log("L'envoi du formulaire a rencontré un problème" + error);
+    }); 
 
   //envoyer toutes les données concernées (product-ID + donnees contacts) au back-end
   fetch("http://localhost:3000/api/products/order", options)
@@ -313,3 +326,4 @@ function sendOrderData() {
       alert("Le serveur ne répond pas. Réessayer une autre fois.");
     });
 }
+

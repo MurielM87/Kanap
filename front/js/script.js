@@ -1,6 +1,4 @@
-/**
- * appeler l'API par fetch pour créer des requêtes HTTP et des reponses
- */
+//appeler l'API par fetch pour créer des requêtes HTTP et des reponses
 fetch("http://localhost:3000/api/products")
   .then(function (res) {
     return res.json();
