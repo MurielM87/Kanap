@@ -144,7 +144,6 @@ function displayCart(basket) {
 
 
 //validation du formulaire de commande
-
 const cartOrderForm = document.querySelector(".cart__order__form");
 
 //ecouter la modification du prénom
