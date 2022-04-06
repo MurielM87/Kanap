@@ -40,7 +40,7 @@ fetch(`http://localhost:3000/api/products/${productId}`)
       itemColor.innerText = color;
     }
   })
-  .catch((err) => console.log(`Erreur : ${err}`));
+  .catch((err) => {console.log(`Erreur : ${err}`)});
 
 
 

@@ -151,26 +151,6 @@ cartOrderForm.firstName.addEventListener("change", function () {
   validFirstName(this);
 });
 
-//ecouter la modification du nom
-cartOrderForm.lastName.addEventListener("change", function () {
-  validLastName(this);
-});
-
-//ecouter la modification de l'adresse
-cartOrderForm.address.addEventListener("change", function () {
-  validAddress(this);
-});
-
-//ecouter la modification de la ville
-cartOrderForm.city.addEventListener("change", function () {
-  validCity(this);
-});
-
-//ecouter la modification de l'email
-cartOrderForm.email.addEventListener("change", function () {
-  validEmail(this);
-});
-
 //validation du prénom
 function validFirstName(inputFirstName) {
   //creation de la reg exp pour valider le prenom
@@ -187,6 +167,11 @@ function validFirstName(inputFirstName) {
     return false;
   }
 }
+
+//ecouter la modification du nom
+cartOrderForm.lastName.addEventListener("change", function () {
+  validLastName(this);
+});
 
 //validation du nom
 function validLastName(inputLastName) {
@@ -205,6 +190,11 @@ function validLastName(inputLastName) {
   }
 }
 
+//ecouter la modification de l'adresse
+cartOrderForm.address.addEventListener("change", function () {
+  validAddress(this);
+});
+
 //validation de l'adresse postale
 function validAddress(inputAddress) {
   //creation de la reg exp pour valider l'adresse
@@ -222,6 +212,11 @@ function validAddress(inputAddress) {
   }
 }
 
+//ecouter la modification de la ville
+cartOrderForm.city.addEventListener("change", function () {
+  validCity(this);
+});
+
 //validation de la ville
 function validCity(inputCity) {
   //creation de la reg exp pour valider la ville
@@ -238,6 +233,11 @@ function validCity(inputCity) {
     return false;
   }
 }
+
+//ecouter la modification de l'email
+cartOrderForm.email.addEventListener("change", function () {
+  validEmail(this);
+});
 
 //validation de l'email
 function validEmail(inputEmail) {
@@ -343,7 +343,7 @@ function sendOrderData() {
       //diriger sur la page confirmation en passant l'id dans l'URL
       window.location.replace(`confirmation.html?order=${data.orderId}`);
     })
-    .catch(function (error) {
+    .catch((error) => {
       alert(
         "Le serveur ne répond pas. Merci de revenir ultérieurement."
       );

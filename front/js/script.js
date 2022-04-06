@@ -48,4 +48,4 @@ fetch("http://localhost:3000/api/products")
           </a>`;
       }*/
   })
-  .catch((err) => console.log(`Erreur : ${err}`)); 
+  .catch((err) => {console.log(`Erreur : ${err}`)}); 
