@@ -2,6 +2,13 @@ const cartItems = document.getElementById("cart__items");
 const mytotalQuantity = document.getElementById("totalQuantity");
 const mytotalPrice = document.getElementById("totalPrice");
 
+const inputFirstName = document.getElementById("firstName");
+const inputLastName = document.getElementById("lastName");
+const inputAddress = document.getElementById("address");
+const inputEmail = document.getElementById("email");
+const inputCity = document.getElementById("city");
+
+
 //récupérer les données enregistrées des produits dans le localStorage
 let cartData = getLocalStorage();
 console.log(cartData);
@@ -260,16 +267,10 @@ function validEmail(inputEmail) {
 }
 
 //recuperer ces donnees lors du click sur la bouton "commander"
-function getOrderData() {
+//function getOrderData() {
   //ecouter la modification de la bouton "commander"
   cartOrderForm.addEventListener("submit", function (e) {
     e.preventDefault();
-
-    const inputFirstName = document.getElementById("firstName");
-    const inputLastName = document.getElementById("lastName");
-    const inputAddress = document.getElementById("address");
-    const inputEmail = document.getElementById("email");
-    const inputCity = document.getElementById("city");
 
     //recuperer les donnees quand tous les champs sont bien valides
     if (
@@ -290,58 +291,62 @@ function getOrderData() {
       alert("Merci de bien vérifier votre formulaire avant de commander");
     }
   });
-}
-getOrderData();
+
 
 //preparer les donnees validees dans le formulaires pour l'envoyer dans le back-end
 function prepareOrderData() {
   //format demande par le back-end
   const contactData = {
-    firstName: document.getElementById("firstName").value,
-    lastName: document.getElementById("lastName").value,
-    address: document.getElementById("address").value,
-    email: document.getElementById("email").value,
-    city: document.getElementById("city").value,
+    firstName: inputFirstName.value,
+    lastName: inputLastName.value,
+    address: inputAddress.value,
+    email: inputEmail.value,
+    city: inputCity.value,
   };
-console.log(contactData)
-  //preparer le tableau de string product ID
-  const idProducts = [];
+  console.log(contactData)
 
-  for (let i = 0; i < cartData.length; i++) {
-    idProducts.push(cartData[i].id);
-  }
-console.log(idProducts);
-  const orderData = {
+  //recuperer les donnees du panier
+  /*1ere methode
+   //preparer le tableau de product ID
+   const idProducts = [];
+   for (let i = 0; i < cartData.length; i++) {
+     idProducts.push(cartData[i].id);
+   }*/
+  /*2eme methode
+   for(let product of cartData){
+     idProducts.push(product.id);
+   }*/
+  //3eme methode
+  const idProducts = cartData.map(product => product.id);
+  console.log("idProducts", idProducts);
+
+
+  return {
     products: idProducts,
     contact: contactData,
   };
-  return orderData;
 }
 
 //envoyer les donnees du formulaire et les traiter
 function sendOrderData() {
   const orderData = prepareOrderData();
-  const jsonOrderData = JSON.stringify(orderData);
 
-  //effectuer une requête POST sur l'API
-  const options = {
+  //effectuer une requête POST sur l'API et envoyer toutes les donnees (prorduct-ID + données contacts) dans le back-end
+  fetch("http://localhost:3000/api/products/order", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: jsonOrderData,
-  };
-
-  //envoyer toutes les donnees (prorduct-ID + données contacts) dans le back-end
-  fetch("http://localhost:3000/api/products/order", options)
+    body: JSON.stringify(orderData),
+  })
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
       //vider le localStorage
-      localStorage.clear();
+      //  localStorage.clear();
       //diriger sur la page confirmation en passant l'id dans l'URL
-      window.location.replace(`confirmation.html?order=${data.orderId}`);
+      //  window.location.replace(`confirmation.html?order=${data.orderId}`);
     })
     .catch((error) => {
       alert(
