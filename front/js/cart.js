@@ -2,6 +2,8 @@ const cartItems = document.getElementById("cart__items");
 const mytotalQuantity = document.getElementById("totalQuantity");
 const mytotalPrice = document.getElementById("totalPrice");
 
+const cartOrderForm = document.querySelector(".cart__order__form");
+
 const inputFirstName = document.getElementById("firstName");
 const inputLastName = document.getElementById("lastName");
 const inputAddress = document.getElementById("address");
@@ -151,15 +153,23 @@ function displayCart(basket) {
 
 
 //validation du formulaire de commande
-const cartOrderForm = document.querySelector(".cart__order__form");
-
 //ecouter la modification du prénom
 cartOrderForm.firstName.addEventListener("change", function () {
-  validFirstName(this);
+  validField(this);
 });
 
-//validation du prénom
-function validFirstName(inputFirstName) {
+//ecouter la modification du nom
+cartOrderForm.lastName.addEventListener("change", function () {
+  validField(this);
+});
+
+//ecouter la modification de la ville
+cartOrderForm.city.addEventListener("change", function () {
+  validField(this);
+});
+
+//validation du prénom, du nom et de la ville
+function validField(inputFirstName, inputLastName, inputCity) {
   //creation de la reg exp pour valider le prenom
   const firstNameRegExp = new RegExp("^[a-zA-ZÀ-ÿ ,.'-]{2,}$", "g");
 
@@ -173,15 +183,7 @@ function validFirstName(inputFirstName) {
     firstNameErrorMsg.textContent = "format non-valide, minimum 2 caractères, lettres uniquement.";
     return false;
   }
-}
-
-//ecouter la modification du nom
-cartOrderForm.lastName.addEventListener("change", function () {
-  validLastName(this);
-});
-
-//validation du nom
-function validLastName(inputLastName) {
+  
   //creation de la reg exp pour valider le nom
   const lastNameRegExp = new RegExp("^[a-zA-ZÀ-ÿ ,.'-]{2,}$", "g");
 
@@ -195,6 +197,20 @@ function validLastName(inputLastName) {
     lastNameErrorMsg.textContent = "format non-valide, minimum 2 caractères, lettres uniquement.";
     return false;
   }
+//creation de la reg exp pour valider la ville
+const cityRegExp = new RegExp("^[a-zA-ZÀ-ÿ ,.'-]{2,}$", "g");
+
+const testCity = cityRegExp.test(inputCity.value);
+const cityErrorMsg = inputCity.nextElementSibling;
+
+if (testCity) {
+  cityErrorMsg.textContent = "valide";
+  return true;
+} else {
+  cityErrorMsg.textContent = "format non-valide, minimum 2 caractères, lettres uniquement.";
+  return false;
+}
+
 }
 
 //ecouter la modification de l'adresse
@@ -215,28 +231,6 @@ function validAddress(inputAddress) {
     return true;
   } else {
     addressErrorMsg.textContent = "format non-valide, minimum 2 caractères, chiffres ou lettres uniquement.";
-    return false;
-  }
-}
-
-//ecouter la modification de la ville
-cartOrderForm.city.addEventListener("change", function () {
-  validCity(this);
-});
-
-//validation de la ville
-function validCity(inputCity) {
-  //creation de la reg exp pour valider la ville
-  const cityRegExp = new RegExp("^[a-zA-ZÀ-ÿ ,.'-]{2,}$", "g");
-
-  const testCity = cityRegExp.test(inputCity.value);
-  const cityErrorMsg = inputCity.nextElementSibling;
-
-  if (testCity) {
-    cityErrorMsg.textContent = "valide";
-    return true;
-  } else {
-    cityErrorMsg.textContent = "format non-valide, minimum 2 caractères, lettres uniquement.";
     return false;
   }
 }
@@ -274,10 +268,8 @@ function validEmail(inputEmail) {
 
     //recuperer les donnees quand tous les champs sont bien valides
     if (
-      validFirstName(inputFirstName) &&
-      validLastName(inputLastName) &&
+      validField(inputFirstName, inputLastName, inputCity) &&
       validAddress(inputAddress) &&
-      validCity(inputCity) &&
       validEmail(inputEmail)
     ) {
       //si le panier est vide
@@ -344,9 +336,9 @@ function sendOrderData() {
     })
     .then(function (data) {
       //vider le localStorage
-      //  localStorage.clear();
+      localStorage.clear();
       //diriger sur la page confirmation en passant l'id dans l'URL
-      //  window.location.replace(`confirmation.html?order=${data.orderId}`);
+      window.location.replace(`confirmation.html?order=${data.orderId}`);
     })
     .catch((error) => {
       alert(
