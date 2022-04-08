@@ -170,10 +170,11 @@ cartOrderForm.city.addEventListener("change", function () {
 
 //validation du prénom, du nom et de la ville
 function validField(inputFirstName, inputLastName, inputCity) {
-  //creation de la reg exp pour valider le prenom
-  const firstNameRegExp = new RegExp("^[a-zA-ZÀ-ÿ ,.'-]{2,}$", "g");
+  //creation de la reg exp pour valider le prenom, le nom et la ville (que des lettres)
+  const fieldRegExp = new RegExp("^[a-zA-ZÀ-ÿ ,.'-]{2,}$", "g");
 
-  const testFirstName = firstNameRegExp.test(inputFirstName.value);
+  //validation prenom
+  const testFirstName = fieldRegExp.test(inputFirstName.value);
   const firstNameErrorMsg = inputFirstName.nextElementSibling;
 
   if (testFirstName) {
@@ -184,10 +185,8 @@ function validField(inputFirstName, inputLastName, inputCity) {
     return false;
   }
   
-  //creation de la reg exp pour valider le nom
-  const lastNameRegExp = new RegExp("^[a-zA-ZÀ-ÿ ,.'-]{2,}$", "g");
-
-  const testLastName = lastNameRegExp.test(inputLastName.value);
+  //validation nom
+  const testLastName = fieldRegExp.test(inputLastName.value);
   const lastNameErrorMsg = inputLastName.nextElementSibling;
 
   if (testLastName) {
@@ -197,10 +196,9 @@ function validField(inputFirstName, inputLastName, inputCity) {
     lastNameErrorMsg.textContent = "format non-valide, minimum 2 caractères, lettres uniquement.";
     return false;
   }
-//creation de la reg exp pour valider la ville
-const cityRegExp = new RegExp("^[a-zA-ZÀ-ÿ ,.'-]{2,}$", "g");
 
-const testCity = cityRegExp.test(inputCity.value);
+//validation ville
+const testCity = fieldRegExp.test(inputCity.value);
 const cityErrorMsg = inputCity.nextElementSibling;
 
 if (testCity) {
@@ -218,9 +216,9 @@ cartOrderForm.address.addEventListener("change", function () {
   validAddress(this);
 });
 
-//validation de l'adresse postale
+//validation de l'adresse
 function validAddress(inputAddress) {
-  //creation de la reg exp pour valider l'adresse
+  //creation de la reg exp pour valider l'adresse (lettres et chiffres)
   const addressRegExp = new RegExp("^[a-zA-ZÀ-ÿ0-9 ,.'-]{2,}$", "g");
 
   const testAddress = addressRegExp.test(inputAddress.value);
@@ -242,7 +240,7 @@ cartOrderForm.email.addEventListener("change", function () {
 
 //validation de l'email
 function validEmail(inputEmail) {
-  //creation de la reg exp pour valider email
+  //creation de la reg exp pour valider email (lettres, chiffres, @)
   const emailRegExp = new RegExp(
     "^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$",
     "g"
@@ -336,9 +334,9 @@ function sendOrderData() {
     })
     .then(function (data) {
       //vider le localStorage
-      localStorage.clear();
+      //  localStorage.clear();
       //diriger sur la page confirmation en passant l'id dans l'URL
-      window.location.replace(`confirmation.html?order=${data.orderId}`);
+      //  window.location.replace(`confirmation.html?order=${data.orderId}`);
     })
     .catch((error) => {
       alert(
