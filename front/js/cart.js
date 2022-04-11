@@ -13,13 +13,11 @@ const inputCity = document.getElementById("city");
 
 //récupérer les données enregistrées des produits dans le localStorage
 let cartData = getLocalStorage();
-console.log(cartData);
 
 displayCart(cartData);
 //si le localStorage est vide
 function getLocalStorage() {
   let productCart = localStorage.getItem("myCart");
-  console.log(productCart);
   if (productCart == null) {
     return [];
   } else {
@@ -179,11 +177,15 @@ function validField(inputField) {
 
   if (testField) {
     fieldErrorMsg.textContent = "valide";
-    inputField.style.color = "green";
+    inputField.style.color = "green";    
+    inputField.style.border = "solid";
+    inputField.style.borderColor = "green";
     return true;
   } else {
     fieldErrorMsg.textContent = "format non-valide, minimum 2 caractères, lettres uniquement.";
     inputField.style.color = "red";
+    inputField.style.border = "solid";
+    inputField.style.borderColor = "red";
     return false;
   }
 
@@ -205,10 +207,14 @@ function validAddress(inputAddress) {
   if (testAddress) {
     addressErrorMsg.textContent = "valide";
     inputAddress.style.color = "green";
+    inputAddress.style.border = "solid";
+    inputAddress.style.borderColor = "green";
     return true;
   } else {
-    addressErrorMsg.textContent = "format non-valide, minimum 2 caractères, chiffres ou lettres uniquement.";
+    addressErrorMsg.textContent = "format non-valide, minimum 2 caractères, chiffres et lettres uniquement.";
     inputAddress.style.color = "red";
+    inputAddress.style.border = "solid";
+    inputAddress.style.borderColor = "red";
     return false;
   }
 }
@@ -232,10 +238,14 @@ function validEmail(inputEmail) {
   if (testEmail) {
     emailErrorMsg.textContent = "email valide";
     inputEmail.style.color = "green";
+    inputEmail.style.border = "solid";
+    inputEmail.style.borderColor = "green";
     return true;
   } else {
     emailErrorMsg.textContent = "Merci de mettre un email valide.";
     inputEmail.style.color = "red";
+    inputEmail.style.border = "solid";
+    inputEmail.style.borderColor = "red";
     return false;
   }
 }
@@ -290,7 +300,6 @@ function prepareOrderData() {
   //3eme methode
   const idProducts = cartData.map(product => product.id);
   console.log("idProducts", idProducts);
-
 
   return {
     products: idProducts,
