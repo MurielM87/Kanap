@@ -169,45 +169,23 @@ cartOrderForm.city.addEventListener("change", function () {
 });
 
 //validation du prénom, du nom et de la ville
-function validField(inputFirstName, inputLastName, inputCity) {
+function validField(inputField) {
   //creation de la reg exp pour valider le prenom, le nom et la ville (que des lettres)
   const fieldRegExp = new RegExp("^[a-zA-ZÀ-ÿ ,.'-]{2,}$", "g");
 
   //validation prenom
-  const testFirstName = fieldRegExp.test(inputFirstName.value);
-  const firstNameErrorMsg = inputFirstName.nextElementSibling;
+  const testField = fieldRegExp.test(inputField.value);
+  const fieldErrorMsg = inputField.nextElementSibling;
 
-  if (testFirstName) {
-    firstNameErrorMsg.textContent = "valide";
+  if (testField) {
+    fieldErrorMsg.textContent = "valide";
+    inputField.style.color = "green";
     return true;
   } else {
-    firstNameErrorMsg.textContent = "format non-valide, minimum 2 caractères, lettres uniquement.";
+    fieldErrorMsg.textContent = "format non-valide, minimum 2 caractères, lettres uniquement.";
+    inputField.style.color = "red";
     return false;
   }
-  
-  //validation nom
-  const testLastName = fieldRegExp.test(inputLastName.value);
-  const lastNameErrorMsg = inputLastName.nextElementSibling;
-
-  if (testLastName) {
-    lastNameErrorMsg.textContent = "valide";
-    return true;
-  } else {
-    lastNameErrorMsg.textContent = "format non-valide, minimum 2 caractères, lettres uniquement.";
-    return false;
-  }
-
-//validation ville
-const testCity = fieldRegExp.test(inputCity.value);
-const cityErrorMsg = inputCity.nextElementSibling;
-
-if (testCity) {
-  cityErrorMsg.textContent = "valide";
-  return true;
-} else {
-  cityErrorMsg.textContent = "format non-valide, minimum 2 caractères, lettres uniquement.";
-  return false;
-}
 
 }
 
@@ -226,9 +204,11 @@ function validAddress(inputAddress) {
 
   if (testAddress) {
     addressErrorMsg.textContent = "valide";
+    inputAddress.style.color = "green";
     return true;
   } else {
     addressErrorMsg.textContent = "format non-valide, minimum 2 caractères, chiffres ou lettres uniquement.";
+    inputAddress.style.color = "red";
     return false;
   }
 }
@@ -251,36 +231,38 @@ function validEmail(inputEmail) {
 
   if (testEmail) {
     emailErrorMsg.textContent = "email valide";
+    inputEmail.style.color = "green";
     return true;
   } else {
-    emailErrorMsg.textContent = "Merci de mettre un email valide. ";
+    emailErrorMsg.textContent = "Merci de mettre un email valide.";
+    inputEmail.style.color = "red";
     return false;
   }
 }
 
 //recuperer ces donnees lors du click sur la bouton "commander"
 //function getOrderData() {
-  //ecouter la modification de la bouton "commander"
-  cartOrderForm.addEventListener("submit", function (e) {
-    e.preventDefault();
+//ecouter la modification de la bouton "commander"
+cartOrderForm.addEventListener("submit", function (e) {
+  e.preventDefault();
 
-    //recuperer les donnees quand tous les champs sont bien valides
-    if (
-      validField(inputFirstName, inputLastName, inputCity) &&
-      validAddress(inputAddress) &&
-      validEmail(inputEmail)
-    ) {
-      //si le panier est vide
-      if (cartData.length == 0) {
-        alert("Attention, votre panier est vide ! ");
-      } else {
-        sendOrderData();
-        alert("Votre commande a bien été prise en compte.");
-      }
+  //recuperer les donnees quand tous les champs sont bien valides
+  if (
+    validField(inputFirstName, inputLastName, inputCity) &&
+    validAddress(inputAddress) &&
+    validEmail(inputEmail)
+  ) {
+    //si le panier est vide
+    if (cartData.length == 0) {
+      alert("Attention, votre panier est vide ! ");
     } else {
-      alert("Merci de bien vérifier votre formulaire avant de commander");
+      sendOrderData();
+      alert("Votre commande a bien été prise en compte.");
     }
-  });
+  } else {
+    alert("Merci de bien vérifier votre formulaire avant de commander");
+  }
+});
 
 
 //preparer les donnees validees dans le formulaires pour l'envoyer dans le back-end
