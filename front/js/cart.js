@@ -241,7 +241,6 @@ function validEmail(inputEmail) {
 }
 
 //recuperer ces donnees lors du click sur la bouton "commander"
-//function getOrderData() {
 //ecouter la modification de la bouton "commander"
 cartOrderForm.addEventListener("submit", function (e) {
   e.preventDefault();
@@ -316,9 +315,9 @@ function sendOrderData() {
     })
     .then(function (data) {
       //vider le localStorage
-      //  localStorage.clear();
+      localStorage.clear();
       //diriger sur la page confirmation en passant l'id dans l'URL
-      //  window.location.replace(`confirmation.html?order=${data.orderId}`);
+      window.location.replace(`confirmation.html?order=${data.orderId}`);
     })
     .catch((error) => {
       alert(
