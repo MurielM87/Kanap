@@ -21,7 +21,7 @@ fetch("http://localhost:3000/api/products")
         const productImg = document.createElement("img"); //creation balise image
         productArticle.appendChild(productImg); //relier l'element img a son parent
         productImg.src = product.imageUrl; //ajout lien image
-        productImg.alt = product.altTxt;
+        productImg.alt = product.altTxt; //ajout texte alternatif a l'image
 
         const productName = document.createElement("h3"); //creation balise titre h3
         productArticle.appendChild(productName); //relier l'element h3 a son parent

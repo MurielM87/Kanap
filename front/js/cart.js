@@ -192,7 +192,7 @@ function validField(inputField, regExp) {
     inputField.style.borderColor = "green";
     return true;
   } else {
-    fieldErrorMsg.textContent = "format non-valide, minimum 2 caractères, lettres uniquement.";
+    fieldErrorMsg.textContent = "format non-valide";
     inputField.style.color = "red";
     inputField.style.border = "solid";
     inputField.style.borderColor = "red";
