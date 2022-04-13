@@ -153,23 +153,23 @@ function displayCart(basket) {
 //validation du formulaire de commande
 //ecouter la modification du prénom
 cartOrderForm.firstName.addEventListener("change", function () {
-  validField(this);
+  validField(this, "^[a-zA-ZÀ-ÿ '-]{2,}$");
 });
 
 //ecouter la modification du nom
 cartOrderForm.lastName.addEventListener("change", function () {
-  validField(this);
+  validField(this, "^[a-zA-ZÀ-ÿ '-]{2,}$");
 });
 
 //ecouter la modification de la ville
 cartOrderForm.city.addEventListener("change", function () {
-  validField(this);
+  validField(this, "^[a-zA-ZÀ-ÿ ,.'-]{2,}$");
 });
 
 //validation du prénom, du nom et de la ville
-function validField(inputField) {
+function validField(inputField, regExp) {
   //creation de la reg exp pour valider le prenom, le nom et la ville (que des lettres)
-  const fieldRegExp = new RegExp("^[a-zA-ZÀ-ÿ ,.'-]{2,}$", "g");
+  const fieldRegExp = new RegExp(regExp, "g");
 
   //validation prenom, nom et ville
   const testField = fieldRegExp.test(inputField.value);
