@@ -12,9 +12,9 @@ const inputCity = document.getElementById("city");
 
 
 //récupérer les données enregistrées des produits dans le localStorage
-let cartData = getLocalStorage();
+let cartContent = getLocalStorage();
 
-displayCart(cartData);
+displayCart(cartContent);
 //si le localStorage est vide
 function getLocalStorage() {
   let productCart = localStorage.getItem("myCart");
@@ -104,16 +104,16 @@ function displayCart(basket) {
           let color = p.color;
           //utilisation de l'objet event pour recuperer la quantite
           let newQuantity = Number(e.target.value);
-          let cartData = getLocalStorage();
-          for (let kanap of cartData) {
+          let cartContent = getLocalStorage();
+          for (let kanap of cartContent) {
             if (kanap.id == id && kanap.color == color) {
               kanap.quantity = newQuantity;
               break;
             }
           }
           //enregistrer dans le localStorage
-          localStorage.setItem("myCart", JSON.stringify(cartData));
-          displayCart(cartData);
+          localStorage.setItem("myCart", JSON.stringify(cartContent));
+          displayCart(cartContent);
         });
 
         const cartItemContentDelete = document.createElement("div");
@@ -128,11 +128,11 @@ function displayCart(basket) {
         cartItemDelete.innerText = "Supprimer";
         cartItemDelete.addEventListener("click", () => {
           //supprimer le produit du panier
-          const deleteCartData = cartData.filter(
+          const deletecartContent = cartContent.filter(
             (element) => element.id !== p.id || element.color !== p.color
           );
           //enregistrer dans le localStorage
-          localStorage.setItem("myCart", JSON.stringify(deleteCartData));
+          localStorage.setItem("myCart", JSON.stringify(deletecartContent));
           //regenerer l'affichage du panier
           location.reload();
         });
@@ -171,7 +171,7 @@ function validField(inputField) {
   //creation de la reg exp pour valider le prenom, le nom et la ville (que des lettres)
   const fieldRegExp = new RegExp("^[a-zA-ZÀ-ÿ ,.'-]{2,}$", "g");
 
-  //validation prenom
+  //validation prenom, nom et ville
   const testField = fieldRegExp.test(inputField.value);
   const fieldErrorMsg = inputField.nextElementSibling;
 
@@ -262,7 +262,7 @@ cartOrderForm.addEventListener("submit", function (e) {
     validEmail(inputEmail)
   ) {
     //si le panier est vide
-    if (cartData.length == 0) {
+    if (cartContent.length == 0) {
       alert("Attention, votre panier est vide ! ");
     } else {
       sendOrderData();
@@ -290,15 +290,15 @@ function prepareOrderData() {
   /*1ere methode
    //preparer le tableau de product ID
    const idProducts = [];
-   for (let i = 0; i < cartData.length; i++) {
-     idProducts.push(cartData[i].id);
+   for (let i = 0; i < cartContent.length; i++) {
+     idProducts.push(cartContent[i].id);
    }*/
   /*2eme methode
-   for(let product of cartData){
+   for(let product of cartContent){
      idProducts.push(product.id);
    }*/
   //3eme methode
-  const idProducts = cartData.map(product => product.id);
+  const idProducts = cartContent.map(product => product.id);
   console.log("idProducts", idProducts);
 
   return {
