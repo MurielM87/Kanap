@@ -161,17 +161,27 @@ cartOrderForm.lastName.addEventListener("change", function () {
   validField(this, "^[a-zA-ZÀ-ÿ '-]{2,}$");
 });
 
+//ecouter la modification de l'adresse
+cartOrderForm.address.addEventListener("change", function () {
+  validField(this, "^[a-zA-ZÀ-ÿ0-9 ,.'-]{2,}$");
+});
+
 //ecouter la modification de la ville
 cartOrderForm.city.addEventListener("change", function () {
   validField(this, "^[a-zA-ZÀ-ÿ ,.'-]{2,}$");
 });
 
-//validation du prénom, du nom et de la ville
+//ecouter la modification de l'email
+cartOrderForm.email.addEventListener("change", function () {
+  validField(this, "^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$");
+});
+
+//validation prénom, nom, adresse, ville et email
 function validField(inputField, regExp) {
   //creation de la reg exp pour valider le prenom, le nom et la ville (que des lettres)
   const fieldRegExp = new RegExp(regExp, "g");
 
-  //validation prenom, nom et ville
+  //validation reg exp
   const testField = fieldRegExp.test(inputField.value);
   const fieldErrorMsg = inputField.nextElementSibling;
 
@@ -191,65 +201,6 @@ function validField(inputField, regExp) {
 
 }
 
-//ecouter la modification de l'adresse
-cartOrderForm.address.addEventListener("change", function () {
-  validAddress(this);
-});
-
-//validation de l'adresse
-function validAddress(inputAddress) {
-  //creation de la reg exp pour valider l'adresse (lettres et chiffres)
-  const addressRegExp = new RegExp("^[a-zA-ZÀ-ÿ0-9 ,.'-]{2,}$", "g");
-
-  const testAddress = addressRegExp.test(inputAddress.value);
-  const addressErrorMsg = inputAddress.nextElementSibling;
-
-  if (testAddress) {
-    addressErrorMsg.textContent = "valide";
-    inputAddress.style.color = "green";
-    inputAddress.style.border = "solid";
-    inputAddress.style.borderColor = "green";
-    return true;
-  } else {
-    addressErrorMsg.textContent = "format non-valide, minimum 2 caractères, chiffres et lettres uniquement.";
-    inputAddress.style.color = "red";
-    inputAddress.style.border = "solid";
-    inputAddress.style.borderColor = "red";
-    return false;
-  }
-}
-
-//ecouter la modification de l'email
-cartOrderForm.email.addEventListener("change", function () {
-  validEmail(this);
-});
-
-//validation de l'email
-function validEmail(inputEmail) {
-  //creation de la reg exp pour valider email (lettres, chiffres, @)
-  const emailRegExp = new RegExp(
-    "^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$",
-    "g"
-  );
-
-  const testEmail = emailRegExp.test(inputEmail.value);
-  const emailErrorMsg = inputEmail.nextElementSibling;
-
-  if (testEmail) {
-    emailErrorMsg.textContent = "email valide";
-    inputEmail.style.color = "green";
-    inputEmail.style.border = "solid";
-    inputEmail.style.borderColor = "green";
-    return true;
-  } else {
-    emailErrorMsg.textContent = "Merci de mettre un email valide.";
-    inputEmail.style.color = "red";
-    inputEmail.style.border = "solid";
-    inputEmail.style.borderColor = "red";
-    return false;
-  }
-}
-
 //recuperer ces donnees lors du click sur la bouton "commander"
 //ecouter la modification de la bouton "commander"
 cartOrderForm.addEventListener("submit", function (e) {
@@ -257,9 +208,7 @@ cartOrderForm.addEventListener("submit", function (e) {
 
   //recuperer les donnees quand tous les champs sont bien valides
   if (
-    validField(inputFirstName, inputLastName, inputCity) &&
-    validAddress(inputAddress) &&
-    validEmail(inputEmail)
+    validField(inputFirstName, inputLastName, inputCity, inputAddress, inputEmail)
   ) {
     //si le panier est vide
     if (cartContent.length == 0) {
