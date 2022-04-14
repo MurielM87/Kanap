@@ -41,7 +41,8 @@ function displayCart(basket) {
         let quantity = p.quantity;
 
         //integrer le HTML de manière dynamique
-        const cartProduct = document.createElement("article");
+        //creation balise article pour chaque produit enregistre dans le local storage
+        const cartProduct = document.createElement("article"); 
         cartProduct.classList.add("cart__item");
         cartProduct.setAttribute("data-id", p.id);
         cartProduct.setAttribute("data-color", color);
@@ -50,7 +51,8 @@ function displayCart(basket) {
         cartItemImg.classList.add("cart__item__img");
         cartProduct.appendChild(cartItemImg);
 
-        const cartImg = document.createElement("img"); //creation balise image
+        //creation balise image
+        const cartImg = document.createElement("img"); 
         cartImg.src = product.imageUrl;
         cartImg.alt = product.altTxt;
         cartItemImg.appendChild(cartImg);
@@ -63,7 +65,8 @@ function displayCart(basket) {
         cartItemDescription.classList.add("cart__item__content__description");
         cartItemContent.appendChild(cartItemDescription);
 
-        const cartTitle = document.createElement("h2");
+        //creation balise nom produit
+        const cartTitle = document.createElement("h2"); 
         cartTitle.innerText = product.name;
         cartItemDescription.appendChild(cartTitle);
 
@@ -82,15 +85,15 @@ function displayCart(basket) {
         cartItemContent.appendChild(cartItemSettings);
 
         const cartItemContentQuantity = document.createElement("div");
-        cartItemContentQuantity.classList.add(
-          "cart_item__content__settings__quantity"
-        );
+        cartItemContentQuantity.classList.add("cart_item__content__settings__quantity");
         cartItemSettings.appendChild(cartItemContentQuantity);
 
+        //creation balise quantite
         const cartItemQuantity = document.createElement("p");
         cartItemContentQuantity.appendChild(cartItemQuantity);
         cartItemContentQuantity.innerText = "Qté";
 
+        //creation balise pour mettre la quantite
         const cartQuantityProduct = document.createElement("input");
         cartItemContentQuantity.appendChild(cartQuantityProduct);
         cartQuantityProduct.setAttribute("type", "number");
@@ -116,6 +119,7 @@ function displayCart(basket) {
           displayCart(cartContent);
         });
 
+        //creation balise supprimer
         const cartItemContentDelete = document.createElement("div");
         cartItemContentDelete.classList.add(
           "cart__item__content__settings__delete"
@@ -241,8 +245,8 @@ function prepareOrderData() {
    const idProducts = [];
    for (let i = 0; i < cartContent.length; i++) {
      idProducts.push(cartContent[i].id);
-   }*/
-  /*2eme methode
+   }
+  2eme methode
    for(let product of cartContent){
      idProducts.push(product.id);
    }*/
@@ -260,7 +264,7 @@ function prepareOrderData() {
 function sendOrderData() {
   const orderData = prepareOrderData();
 
-  //effectuer une requête POST sur l'API et envoyer toutes les donnees (prorduct-ID + données contacts) dans le back-end
+  //effectuer une requête POST sur l'API et envoyer toutes les donnees (prorduct-ID + donnees contacts) dans le back-end
   fetch("http://localhost:3000/api/products/order", {
     method: "POST",
     headers: {
